@@ -1,0 +1,33 @@
+--- a/st.c
++++ b/st.c
+@@ -979,8 +979,10 @@
+ Err          err;
+ Screen      *screen;
+ int32        i;
+-TagArg       tags[2];
++TagArg       tags[3];
+ ScreenGroup *sg;
++int32        displayType = -1;
++int32        type;
+ 
+     sg = (ScreenGroup *)CheckItem(screenGroup,NODE_GRAPHICS,TYPE_SCREENGROUP);
+     if (sg)
+@@ -1001,9 +1003,17 @@
+         return (0);
+     }
+ 
++    err = QueryGraphics(QUERYGRAF_TAG_DEFAULTDISPLAYTYPE, &displayType);
++    if (err < 0)
++        return 0;
++
++    type = (displayType == DI_TYPE_PAL1 || displayType == DI_TYPE_PAL2) ? DI_TYPE_PAL1 : DI_TYPE_NTSC;
++
+     tags[0].ta_Tag = CSG_TAG_SCREENCOUNT;
+     tags[0].ta_Arg = (void *)NUMSCREENS;
+-    tags[1].ta_Tag = CSG_TAG_DONE;
++    tags[1].ta_Tag = CSG_TAG_DISPLAYTYPE;
++    tags[1].ta_Arg = (void *)type;
++    tags[2].ta_Tag = CSG_TAG_DONE;
+ 
+     err = CreateScreenGroup(screens, tags);
+     if (err >= 0)

@@ -1,0 +1,77 @@
+# addr	name	conf	comment   (conf: C = confirmed from code/strings, L = inferred)
+1838	GetScreenHeight	C	string "GetScreenHeight: Unknown display"; 240/240/288 lines
+18d0	ode_get_ext_id_b1	L	returns EXT_ID reply byte 1
+18f0	ode_get_version	C	(reply[10]<<16)|(reply[8]<<8)|reply[9] from EXT_ID = eject count, major, minor
+1964	ode_refresh_ext_id	C	93 EXT_ID: name = printable reply[2..], ver = reply[8..10]
+1a3c	ode_init	C	finds devices, counts units, 93 EXT_ID, reads 32 B and hex-dumps them
+1c7c	ode_count_units	C	ode-device cmd 13 = xbus Device.dev_MaxUnitNum (+0x60); returns it + 1. ode_init: 2 units -> ODE is unit 1, else unit 0
+1d78	ode_cmd	C	IOReq "odecmd0" on the ode device: send 7 cmd bytes, receive n status bytes (DoIO)
+1e44	ode_cmd_data	C	IOReqs "odecmd1"+"oderw": driver cmd 12 = command + data phase (unit, buf, len)
+2014	ode_c0_change_toc	C	C0 toc_id(4 BE)
+2090	ode_c3_clear_playlist	C	C3
+20e8	ode_c4_add_playlist	C	C4 toc_id(4 BE); fails if reply[1] or reply[2] == 0
+2188	ode_c5_launch_playlist	C	C5
+21e0	ode_e6_fill_buffer	C	E6 word_index(2) + 4 data bytes, repeated: copies a buffer into the ODE fops buffer
+22f0	ode_e1_open_file	C	E1: name==NULL -> cmd[1]=1 open by toc id; else E6-fill name, cmd[1]=0 len; cmd[6]=write flag
+23f0	ode_e2_seek_file	C	E2 [E2, x>>8, x, 0...]: UNUSED (no callers); firmware reads cmd[1..4], so this would seek to x<<16
+245c	ode_fill_buffer	L	wrapper of ode_e6_fill_buffer
+248c	ode_e7_read_buffer	C	E7 via ode_cmd_data, 0x800 B; checks reply[0]==0xE7, copies out
+254c	ode_e3_read_file	C	E3 len(2) -> returns n (reply[1..2])
+25ec	ode_e4_write_file	C	E4 len(2) -> returns n (reply[1..2])
+268c	ode_e5_close_file	C	E5
+26e4	ode_f0_update_ode	C	F0; returns reply[1]==0
+2760	ode_c1_get_toc	C	UNUSED (no callers). C1 toc_id + offset, 16 B per reply into 2 KB buffer; checks reply[0]==0xC1
+2878	ode_d1_get_toc_list	L	D1
+6a2c	memset	L
+6ec8	memcpy	L
+1230	ControlPadSanityCheck	C	SDK 2.5 ExamplesLib controlpad.c (strings)
+1320	InitControlPad	C	ExamplesLib controlpad.c
+14e0	DoControlPad	C	ExamplesLib controlpad.c
+15cc	ReturnPreviousControlPad	C	ExamplesLib controlpad.c
+1640	KillControlPad	C	ExamplesLib controlpad.c
+16fc	GetDisplayType	C	ExamplesLib getvideoinfo.c
+17a0	GetScreenWidth	C	ExamplesLib getvideoinfo.c
+2954	ramp_read	C	IOReq "ramprq" on the ramp device, CMD_READ: (unit, offset/address, buf, len); unit 0 = memory, 3 = NVRAM
+2a54	ramp_write	C	IOReq "ramprq", CMD_WRITE: (unit, offset/address, buf, len)
+2b44	nvram_unmount	L	called right after "Unmounting nvram"; LoadProgram("$c/lmadm -u ram 3 0 nvram")
+2b90	run_fscheck	C	LoadProgram("$c/fscheck")
+978c	aif_selfreloc_at_load	C	AIF self-reloc entry (code moved to 0x80000000); ZI at run time
+498	secret_seq1_step	C	advances on table @0x1104 (Up Up Down Down Left Right Left Right B A = Konami); 10 hits -> 1
+51c	secret_seq2_step	C	table @0x112c (Down Down Up Up Right Left Right Left A B); 10 hits -> 1
+59c	gfx_init	C	OpenGraphicsFolio, CreateBasicDisplay, LoadFont "assets/sans_serif_14.font", LoadImage bg.IMAG / st.IMAG, InitControlPad
+7cc	gfx_shutdown	L	DeleteBasicDisplay, UnloadFont, KillControlPad
+86c	create_help_pane	C	help text cel (older wording "B back/clr", "C q.play"); rewritten by side_pane_update
+a8c	read_pad	C	DoControlPad(1, &buttons, 0) -> buttons
+ac8	show_secret_image	C	1: "$c/maus", 2: "System/Drivers/TUNERS/access.tuner", 3: "$c/walker" (153,636-B IMAGs); "Babushka" if load fails; until a button
+c48	draw_frame	C	flip buffer; draws bg.IMAG (st.IMAG in About), list rows, side pane
+d00	display_frame	C	DisplayScreen(current buffer)
+d3c	main	C	ode_init, gfx_init, C0 toc 0, starts $boot/mplay, "Waiting for opera init", secrets, main pad loop
+ff8	timer_delay	C	"timer" device, IOReq cmd 3 (TIMERCMD_DELAY) unit 1: (seconds, microseconds)
+2d3c	side_pane_update	C	help lines, "%s:%s" = ODE name ":" "r5", "v %d.%d.%d" = EXT_ID 8.9.10, optional status line
+2ef4	browser_init	C	stores ODE name; if name[0]=='X' (XPort) apply_ram_patches; loads page 0; "Progress" cel
+3058	browser_input	C	pad handler (Up/Down, L/R shoulder pages, A enter/queue, B clear queue, C fast start, P play queue, X menu)
+35dc	draw_list_rows	C	DrawCels per visible row (max 14)
+3678	draw_side_pane	C	DrawCels of the side pane cel
+36b4	list_highlight	C	selected row background colour per mode; queued rows text 0x7bc0 else 0x6f7b
+37a8	parse_toc_entry	C	D1 record (BE flags, toc_id, name_len, name) -> 0x2c-byte entry, name max 32; returns record size; 0xffffffff = end
+394c	browser_load_page	C	D1 from index, fills up to 14 rows in D1 order (no sorting); dirs shown "[%s]"
+3ad8	xmenu_draw	C	draws menu table[mode] (label,handler pairs, NULL label ends)
+3b94	xmenu_input	C	A/B/C/P in menu modes: call handler of selected row; in modes 2/3 return to mode 1
+3c80	xmenu_storage_manager	C	LoadProgram("assets/storagetuner"); waits for X
+3cdc	xmenu_save_nvram	C	ramp_read(3, 0, 32 KB); E1 "nvram.nvm" write; 16 x (E6 fill 2 KB, E4 write); E5
+3ed4	xmenu_load_nvram	C	unmount (lmadm), E1 "nvram.nvm" read; 16 x (E3 read, E7 fetch); E5; ramp_write(3, 0, 32 KB); fscheck
+41c0	xmenu_update_ode	C	F0; ok -> "Updating. Don't turn off power!", 15 s, refresh EXT_ID; else "Update not found"
+4298	xmenu_dump_ram	C	"ram3b.nvm": memory 0..0x2fffff via ramp unit 0
+4448	xmenu_dump_sysrom	C	"sysrom.nvm": 1 MB ramp unit 2
+45dc	xmenu_dump_fontrom	C	"fontrom.nvm": 1 MB ramp unit 5
+4774	xmenu_dump_fmvrom	C	"fmvrom.nvm": 1 MB ramp unit 4
+4914	xmenu_about	C	mode 2 (About table @0x9570)
+4954	xmenu_device_info	C	mode 3: PATCHES, MADAM @0x03300000, CLIO @0x03400000, DIPIR crc, SYSRom/FONTRom/FMVRom CRC32
+4d08	show_status	C	writes the status line cel and redraws
+4d74	is_about_mode	C	mode == 2
+4db4	crc32_update	C	table @0x4e00 (standard CRC-32 poly 0xEDB88320)
+5200	ram_crc_0x200	C	~crc32(RAM 0x200..0x3ff) (shown as "DIPIR")
+525c	apply_ram_patches	C	table @0x5338 {crc, addr, old, new}: crc matches and *addr == old -> write new; XPort only
+77c0	UnloadImage	L	lib3do-style: FreeMemToMemLists of a LoadImage buffer (only caller show_secret_image)
+7900	UnloadFile	L	lib3do-style: FreeMemToMemLists; used by LoadFont/LoadImage/UnloadFont
+61b8	CloseGraphicsFolio	L	graphics.lib(closefolio.do): bytes identical to filesystem CloseFileFolio, literal 0x9738 is graphics openfolio data

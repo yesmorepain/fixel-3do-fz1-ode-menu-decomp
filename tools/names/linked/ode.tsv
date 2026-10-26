@@ -1,0 +1,101 @@
+100	__main	cstartup.o	59	link
+128	exit	cstartup.o	59	link
+148	__rt_stkovf_split_small	cstartup.o	59	link
+14c	__rt_stkovf_split_big	cstartup.o	59	link
+16c	kprintf	kprintf.o	2	link
+174	SuperFindNamedItem	finditem.o	19	link
+1c0	SuperCreateItem	CreateItem.o	13	link
+108c	PrintfSysErr	syserr.o	15	link
+10c8	memmove	memmove.o	4	link
+10d8	clib_version	builddate.clib.dlib.o	6	link
+10f0	GetSysErr	vector22.o	4	link
+1100	printf	printf.o	18	link
+1148	AllocBuffer	stdlib.o	265	link
+11a0	InitMacIO	stdlib.o	265	link
+12a8	AllocFileBlock	stdlib.o	265	link
+1314	internalfwrite	stdlib.o	265	link
+1464	putc	stdlib.o	265	link
+14d0	fflush	stdlib.o	265	link
+156c	_no_fp_display	nofpdisplay.o	2	link
+1574	__vfprintf	vector21.o	16	link
+15b4	FindNamedItem	finditem.o	9	link
+15d8	memset	vector13.o	4	link
+15e8	strlen	strlen.o	11	link
+1614	AllocACS	supervectors.o	2	link
+161c	AllocMemFromMemList	kbvectors.o (= _AllocMemFromMemList)	6	link
+1634	AllocMemFromMemLists	allocvectors.o	6	link
+164c	AllocMemList	kbvectors.o (= _AllocMemList)	6	link
+1664	CheckIO	kbvectors.o	6	link
+167c	CheckItem	kbvectors.o	6	link
+1694	Disable	supervectors.o	2	link
+169c	Enable	supervectors.o	2	link
+16a4	FindMH	kbvectors.o (= _FindMH)	6	link
+16bc	FirqInterruptControl	supervectors.o	2	link
+16c4	FreeMemList	kbvectors.o (= _FreeMemList)	6	link
+16dc	FreeMemToMemList	kbvectors.o (= _FreeMemToMemList)	6	link
+16f4	FreeMemToMemLists	allocvectors.o	6	link
+170c	GetDirectoryBuffer	supervectors.o	2	link
+1714	GetDirectoryCache	supervectors.o	2	link
+171c	GetMemTrackSize	kbvectors.o	6	link
+1734	GetPageSize	kbvectors.o (= _GetPageSize)	6	link
+174c	IsItemOpened	kbvectors.o (= ItemOpened, _ItemOpened, _IsItemOpened)	6	link
+1764	IsMemReadable	kbvectors.o	6	link
+177c	IsMemWritable	kbvectors.o	6	link
+179c	LookupItem	kbvectors.o	6	link
+17b4	PendACS	supervectors.o	2	link
+17bc	RegisterPeriodicVBLACS	supervectors.o	2	link
+17c4	RegisterSingleVBLACS	supervectors.o	2	link
+17cc	ReleaseDirectoryBuffer	supervectors.o	2	link
+17d4	ScavengeMem	kbvectors.o (= _ScavengeMem)	6	link
+17ec	SectorECC	supervectors.o	2	link
+17f4	SuperAllocSignal	supervectors.o	2	link
+17fc	SuperCloseItem	supervectors.o	2	link
+1804	SuperCompleteIO	supervectors.o	2	link
+180c	SuperControlMem	supervectors.o	2	link
+1814	SuperCreateSizedItem	supervectors.o	2	link
+181c	SuperDebugTrigger	supervectors.o	2	link
+1824	SuperDeleteItem	supervectors.o	2	link
+182c	SuperDiscOsVersion	supervectors.o	2	link
+1834	SuperDoIO	supervectors.o	2	link
+183c	SuperFindAndOpenItem	supervectors.o	2	link
+1844	SuperFindItem	supervectors.o	2	link
+184c	SuperFreeSignal	supervectors.o	2	link
+1854	SuperGetItem	supervectors.o	2	link
+185c	SuperGetMsg	supervectors.o	2	link
+1864	SuperGetThisMsg	supervectors.o	2	link
+186c	SuperInternalAbortIO	supervectors.o	2	link
+1874	SuperInternalControlSuperMem	supervectors.o	2	link
+187c	SuperInternalDeleteItem	supervectors.o	2	link
+1884	SuperInternalDoIO	supervectors.o	2	link
+188c	SuperInternalFreeSignal	supervectors.o	2	link
+1894	SuperInternalLockSemaphore	supervectors.o	2	link
+189c	SuperInternalPutMsg	supervectors.o	2	link
+18a4	SuperInternalSendIO	supervectors.o	2	link
+18ac	SuperInternalSignal	supervectors.o	2	link
+18b4	SuperInternalUnlockSemaphore	supervectors.o	2	link
+18bc	SuperInternalWaitIO	supervectors.o	2	link
+18c4	SuperInternalWaitPort	supervectors.o	2	link
+18cc	SuperIsRamAddr	supervectors.o	2	link
+18d4	SuperLockSemaphore	supervectors.o	2	link
+18dc	SuperOpenItem	supervectors.o	2	link
+18e4	SuperQuerySysInfo	supervectors.o	2	link
+18ec	SuperReadHardwareRandomNumber	supervectors.o	2	link
+18f4	SuperReplyMsg	supervectors.o	2	link
+18fc	SuperReportEvent	supervectors.o	2	link
+1904	SuperSendIO	supervectors.o	2	link
+190c	SuperSendMsg	supervectors.o	2	link
+1914	SuperSetFunction	supervectors.o	2	link
+191c	SuperSetItemOwner	supervectors.o	2	link
+1924	SuperSetSysInfo	supervectors.o	2	link
+192c	SuperSwitch	supervectors.o	2	link
+1934	SuperSystemScavengeMem	supervectors.o	2	link
+193c	SuperUnlockSemaphore	supervectors.o	2	link
+1944	SuperValidateMem	supervectors.o	2	link
+194c	SuperWait	supervectors.o	2	link
+1954	SuperWaitIO	supervectors.o	2	link
+195c	SuperWaitPort	supervectors.o	2	link
+1964	Superkprintf	supervectors.o	2	link
+196c	TagProcessor	supervectors.o	2	link
+1974	TicksToTimeVal	kbvectors.o (= _TicksToTimeVal)	6	link
+198c	TimeStamp	supervectors.o	2	link
+1994	USecToTicks	kbvectors.o (= _USecToTicks)	6	link

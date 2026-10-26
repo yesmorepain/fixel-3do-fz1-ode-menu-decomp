@@ -1,0 +1,18 @@
+# Fixel's disc image and everything extracted or exported from it (not distributed)
+/original/*
+!/original/README.md
+/extracted/
+/ghidra/*.gpr
+/ghidra/*.rep/
+/ghidra/*_decompiled.c
+/ghidra/*_disasm.s
+/ghidra/*_functions.tsv
+
+# Third-party material (3DO SDK, MPW tools, portfolio_os): obtain separately, see README
+/references/*
+!/references/README.md
+
+# Build output and local environments
+/build/
+/.venv/
+__pycache__/

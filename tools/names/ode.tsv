@@ -1,0 +1,24 @@
+# addr	name	conf	comment
+20c	main	C	creates the "ode" device/driver (xbus proxy) and the ram proxy device, AllocSignal, waits
+4ac	xbus_proxy_init	C	"Starting xbus proxy": opens "xbus", creates cmd IOReq (+0xbc) and rw IOReq (+0xc0)
+6c8	ode_abortio	L	AbortIO on the matching xbus IOReq
+740	ode_dispatch	C	CREATEDRIVER_TAG_DISPATCH (tags @0x19c8). cmd 13: return status byte; cmd 12: data phase (rw IOReq, CMD_READ/WRITE) + XBus CmdCommand(3); other: pass through
+be8	ramp_cmd_write	C	CmdTable[0] @0x1a0c. unit (from *ioi_User) 0: memcpy(ioi_Offset, Send.buf, Send.len) = supervisor memory write; 3: forward to "ram" device; others rejected
+d18	ramp_cmd_read	C	CmdTable[1]. unit 0: memcpy(Recv.buf, ioi_Offset, Recv.len) = supervisor memory read (ROM, chip regs); else forward to "ram" device
+e18	ramp_cmd_status	C	CmdTable[2] (CMD_STATUS), forwarded
+eb0	ramp_init	L	opens a "ram" device item and creates an IOReq (+0xc8)
+1018	xb_callback	C	string "xb callback"; sets io_Flags bit 0 (done)
+174	SuperFindNamedItem	L	kernellib-style: TagArg {TAG_ITEM_NAME, name} -> SuperFindItem
+1c0	SuperCreateItem	L	kernellib-style: SuperCreateSizedItem(type, tags, 0)
+458	dev_stub_ret0_a	L	mov r1,r0; mov r0,#0 (device/driver callback stub)
+474	dev_stub_ret0_b	L	same
+490	dev_stub_ret0_c	L	same
+1008	empty_func	C	prologue + return only
+1064	SuperDo	C	kernellib supervectors.s: ldr pc,[KernelBase,-(MaxUserFunctions+k+1)*4]; byte-identical to SuperGrafDo
+1814	SuperCreateSizedItem	C	SuperDo k=0 (portfolio_os supervectors.s)
+1844	SuperFindItem	C	SuperDo k=4
+186c	SuperInternalAbortIO	C	SuperDo k=-9
+1884	SuperInternalDoIO	C	SuperDo k=-34
+18a4	SuperInternalSendIO	C	SuperDo k=-6
+18dc	SuperOpenItem	C	SuperDo k=5
+1964	Superkprintf	C	SuperDo k=14

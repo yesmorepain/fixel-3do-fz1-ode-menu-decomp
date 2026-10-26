@@ -1,0 +1,3 @@
+# addr	name	conf	comment
+3fc	main	C	":mplay.c": OpenAudioFolio, plays "assets/bgm44.aifc"
+2fc	play_sound_file_loop	L	SoundFilePlayer loop ("Sfp created"), based on SDK playsoundfile.c (guess)
