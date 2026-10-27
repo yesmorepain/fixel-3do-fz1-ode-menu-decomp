@@ -218,7 +218,7 @@ RAM can crash the console. If you can identify the routine, that information wou
 
 ## Licence
 
-The tools in `tools/` and `ghidra/scripts/` are original work of this project and are released under the MIT
-licence (see `LICENSE`). The sources in `src/` and the name lists in `tools/names/` are a reconstruction of, and
-symbols for, Fixel's programs, whose licence is "TBD"; the MIT licence does not cover them. Nothing in this
+The tools in `tools/` and `ghidra/scripts/` are original work of this project and are released under an MIT-based
+licence that forbids commercial products or purposes (see `LICENSE`). The sources in `src/` and the name lists in `tools/names/` are a reconstruction of, and
+symbols for, Fixel's programs, whose licence is "TBD"; that licence does not cover them. Nothing in this
 repository grants any rights to Fixel's software or to the 3DO SDK.
